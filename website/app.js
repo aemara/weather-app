@@ -12,8 +12,7 @@ const apiKey = '&appid=dd71a08fdad0830475aea10b97a39ec6';
 
 document.querySelector('button').addEventListener('click', performAction);
 
-//When user clicks 'generate', (1) get the weather data from the API (2) read his 'feelings' 
-//(3) post the weather data and his feelings to the server.
+
 function performAction(e) {
     const zipCode = document.getElementById('zip').value;
     const feeling = document.getElementById('feelings').value;
@@ -25,7 +24,7 @@ function performAction(e) {
         postData('/projectData', {userFeeling: feeling, weather: weatherData, date: newDate});
     }) 
     
-    .then (updateUI());
+    .then (()=>updateUI());
 }
 
 
@@ -34,9 +33,9 @@ const updateUI = async() => {
     try {
         const allData = await request.json();
         console.log(allData);
-        document.getElementById('date').innerHTML = allData[allData.length-1].date;
-        document.getElementById('temp').innerHTML = allData[allData.length-1].temperature;
-        document.getElementById('content').innerHTML = allData[allData.length-1].userResponse;
+        document.getElementById('date').innerHTML = `Date is ${allData[allData.length-1].date}`;
+        document.getElementById('temp').innerHTML = `Temperature is ${allData[allData.length-1].temperature}`;
+        document.getElementById('content').innerHTML = `Feeling is ${allData[allData.length-1].userResponse}`;
     } catch(error) {
         console.log("error", error);
     }
