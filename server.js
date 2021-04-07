@@ -1,5 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
-projectData = {};
+let projectData = [];
 
 // Require Express to run server and routes
 const express = require('express');
@@ -20,7 +20,6 @@ app.use(cors());
 app.use(express.static('website'));
 
 
-
 // Setup Server
 
 const port = 3000;
@@ -32,16 +31,27 @@ function listening() {
 
 
 // GET route
-app.get('/', sendHello);
+// There should be a GET route setup on the server side with the first argument as a string naming the
+// route, and the second argument a callback function to return the JS object created at the top of server code.
+app.get('/projectData', sendData);
 
-function sendHello (req,res) {
-    console.log("hello world");
+function sendData (req,res) {
+    res.send(projectData);
 };
 
-const data = [];
-app.post('/add', function (req,res) {
-    data.push(req.body);
-    console.log(data);
+
+app.post('/projectData', function (req,res) {
+
+    newEntry = {
+        temperature : req.body.weather,
+        date : req.body.date,
+        userResponse : req.body.userFeeling
+    }
+
+    projectData.push(newEntry);
+    res.send(newEntry);
+    console.log(projectData);
+
 })
 
 
