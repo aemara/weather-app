@@ -1,5 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
-let projectData = [];
+let projectData = {};
 
 // Require Express to run server and routes
 const express = require('express');
@@ -30,9 +30,6 @@ function listening() {
 };
 
 
-// GET route
-// There should be a GET route setup on the server side with the first argument as a string naming the
-// route, and the second argument a callback function to return the JS object created at the top of server code.
 app.get('/projectData', sendData);
 
 function sendData (req,res) {
@@ -48,7 +45,7 @@ app.post('/projectData', function (req,res) {
         userResponse : req.body.userFeeling
     }
 
-    projectData.push(newEntry);
+    projectData = newEntry;
     res.send(newEntry);
     console.log(projectData);
 
